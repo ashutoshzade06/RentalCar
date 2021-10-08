@@ -13,9 +13,12 @@ namespace BLL_.Repository
             Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = null) where T: class;
+
         Task<T> SelectById<T>(int id) where T : class;
         Task<T> SelectById<T>(string id) where T : class;
+
         Task CreateAsync<T>(T entity) where T : class;
+
         Task UpdateAsync<T>(T entity) where T : class;
         Task DeleteAsync<T>(T entity) where T : class;
     }

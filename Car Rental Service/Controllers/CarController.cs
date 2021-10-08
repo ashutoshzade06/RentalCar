@@ -3,6 +3,7 @@ using DAL;
 using DAL.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,5 +83,33 @@ namespace Car_Rental_Service.Controllers
 
             return model;
         }
+
+        [HttpPost("uploadBulkData")]
+        public  async Task<ActionResult<Car[]>> uploadBulkData([FromBody] Car[] carData)
+        {
+            if (carData != null)
+            {
+                foreach (Car car in carData) {
+                    Car new_car = new Car
+                    {
+                        CarID = car.CarID,
+                        Fuel_Type = car.Fuel_Type,
+                        License = car.License,
+                        Model = car.Model,
+                        Type = car.Type
+                    };
+                    await _repository.CreateAsync<Car>(new_car);
+                    
+                }
+                return Ok();
+            }
+
+
+           
+                return NotFound();
+            
+        }
+
+
     }
 }
